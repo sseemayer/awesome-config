@@ -71,7 +71,8 @@ iconbase = "/usr/share/icons/Faenza/apps/16/"
 
 menu_internet = {
 	{ "&firefox", "firefox", image(iconbase .."firefox.png") },
-	{ "&thunderbird", "thunderbird", image(iconbase .. "thunderbird.png")}
+	{ "&thunderbird", "thunderbird", image(iconbase .. "thunderbird.png")},
+	{ "&skype", "skype", image(iconbase .. "skype.png")},
 }
 
 menu_dev = {
@@ -147,6 +148,26 @@ pacicon.image = image(beautiful.widget_pac)
 
 pacwidget = widget({type="textbox"})
 vicious.register(pacwidget, vicious.widgets.pkg, " $1 ", 1801, "Arch")
+
+-- Keyboard layout widget
+kbdcfg = {}
+kbdcfg.cmd = "setxkbmap"
+kbdcfg.layout = { "us", "de" }
+kbdcfg.current = 1  -- us is our default layout
+kbdcfg.widget = widget({ type = "textbox", align = "right" })
+kbdcfg.widget.text = " " .. kbdcfg.layout[kbdcfg.current] .. " "
+kbdcfg.switch = function ()
+kbdcfg.current = kbdcfg.current % #(kbdcfg.layout) + 1
+local t = " " .. kbdcfg.layout[kbdcfg.current] .. " "
+kbdcfg.widget.text = t
+os.execute( kbdcfg.cmd .. t )
+end
+
+-- Mouse bindings
+kbdcfg.widget:buttons(awful.util.table.join(
+awful.button({ }, 1, function () kbdcfg.switch() end)
+))
+
 
 -- Create a textclock widget
 mytextclock = widget({ type = "textbox" })
@@ -237,6 +258,7 @@ for s = 1, screen.count() do
 	memwidget, memicon, cpuwidget, cpuicon,
 	pacwidget, pacicon, 
 	mpdwidget, mpdicon,
+	kbdcfg.widget,
         s == 1 and mysystray or nil,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
@@ -247,7 +269,7 @@ end
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
 
-    awful.button({ }, 1, function () mymainmenu:toggle() end),
+--  awful.button({ }, 1, function () mymainmenu:toggle() end),
     awful.button({ }, 3, function () mymainmenu:toggle() end),
     awful.button({ }, 4, awful.tag.viewnext),
     awful.button({ }, 5, awful.tag.viewprev)
@@ -271,7 +293,6 @@ globalkeys = awful.util.table.join(
             if client.focus then client.focus:raise() end
         end),
     awful.key({ modkey,           }, "w", function () mymainmenu:show({keygrabber=true}) end),
-    awful.key({ modkey,		  }, "s", function () awful.util.spawn("sonata") end ),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
@@ -306,6 +327,9 @@ globalkeys = awful.util.table.join(
     awful.key({ }, "XF86AudioRaiseVolume", function() awful.util.spawn_with_shell('/home/seemayer/bin/volume up') end ),
     awful.key({ }, "XF86AudioLowerVolume", function() awful.util.spawn_with_shell('/home/seemayer/bin/volume down') end ),
     awful.key({ }, "XF86AudioMute", function() awful.util.spawn_with_shell('/home/seemayer/bin/volume mute') end ),
+    
+    awful.key({ modkey,		  }, "s", function () awful.util.spawn("sonata") end ),
+    awful.key({ modkey,		  }, "p", function () awful.util.spawn("mpc toggle") end ),
 
     -- Prompt
     awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
