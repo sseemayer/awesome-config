@@ -115,50 +115,27 @@ netwidget = widget({ type = "textbox" })
 vicious.register(netwidget, vicious.widgets.net, '<span color="#CC9393">${wlan0 down_kb}</span> <span color="#7F9F7F">${wlan0 up_kb}</span>', 3)
 
 -- Create a Memory widget
-memicon = widget({ type = "imagebox" })
-memicon.image = image(beautiful.widget_mem)
-
---memwidget = awful.widget.progressbar()
---memwidget:set_width(5)
---memwidget:set_height(12)
---memwidget:set_vertical(true)
---memwidget:set_background_color(beautiful.bg_normal)
---memwidget:set_border_color("#C1E1EA")
---memwidget:set_color("#C1E1EA")
---vicious.register(memwidget, vicious.widgets.mem, '$1', 5)
---awful.widget.layout.margins[memwidget.widget] = { top = 3 }
-
-memwidget = {}
-memwidget.widget = widget({ type = "textbox" })
-vicious.register(memwidget.widget, vicious.widgets.mem, '$1%', 5)
+memwidget = widget({ type = "textbox" })
+vicious.register(memwidget, vicious.widgets.mem, '<span color="#999eff">mem $1%</span>', 5)
 
 -- Create a CPU widget
-cpuicon = widget({ type = "imagebox" })
-cpuicon.image = image(beautiful.widget_cpu)
-
 cpuwidget = widget({ type = "textbox" })
-vicious.register(cpuwidget, vicious.widgets.cpu, '<span color="#F9EAA6">$1%</span> ', 2)
+vicious.register(cpuwidget, vicious.widgets.cpu, '<span color="#CC9393">cpu $1% </span> ', 2)
 
 -- Create an MPD widget
-mpdicon = widget({ type = "imagebox" })
-mpdicon.image = image(beautiful.widget_mpd)
-
 mpdwidget = widget({ type = "textbox" })
 vicious.register(mpdwidget, vicious.widgets.mpd,
 	function (widget, args)
 		if args["{state}"] == "Stop" then 
-			return " - "
+			return '<span color="#ba82e1"></span>'
 		else 
-			return " " .. args["{Artist}"]..' - '.. args["{Title}"] .. " "
+			return '<span color="#ba82e1"> ' .. args["{Artist}"]..' - '.. args["{Title}"] .. " </span>"
 		end
-	end, 10)
+	end, 3)
 
 -- Pacman Widget
-pacicon = widget({ type = "imagebox" })
-pacicon.image = image(beautiful.widget_pac)
-
 pacwidget = widget({type="textbox"})
-vicious.register(pacwidget, vicious.widgets.pkg, " $1 ", 1801, "Arch")
+vicious.register(pacwidget, vicious.widgets.pkg, '<span color="#FFCC00">pac $1 </span>', 1801, "Arch")
 
 -- Keyboard layout widget
 kbdcfg = {}
@@ -166,10 +143,10 @@ kbdcfg.cmd = "setxkbmap"
 kbdcfg.layout = { "us", "de" }
 kbdcfg.current = 1  -- us is our default layout
 kbdcfg.widget = widget({ type = "textbox", align = "right" })
-kbdcfg.widget.text = " " .. kbdcfg.layout[kbdcfg.current] .. " "
+kbdcfg.widget.text = '<span color="#adde97"> ' .. kbdcfg.layout[kbdcfg.current] .. " </span>"
 kbdcfg.switch = function ()
 kbdcfg.current = kbdcfg.current % #(kbdcfg.layout) + 1
-local t = " " .. kbdcfg.layout[kbdcfg.current] .. " "
+local t = '<span color="#adde97"> ' .. kbdcfg.layout[kbdcfg.current] .. " </span>"
 kbdcfg.widget.text = t
 os.execute( kbdcfg.cmd .. t )
 end
@@ -266,10 +243,7 @@ for s = 1, screen.count() do
         mylayoutbox[s],
         mytextclock,
 	upicon, netwidget, dnicon,
-	memwidget.widget, memicon, cpuwidget, cpuicon,
-	pacwidget, pacicon, 
-	mpdwidget, mpdicon,
-	kbdcfg.widget,
+	memwidget, cpuwidget, pacwidget, kbdcfg.widget, mpdwidget,
         s == 1 and mysystray or nil,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
