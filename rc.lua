@@ -118,8 +118,19 @@ vicious.register(netwidget, vicious.widgets.net, '<span color="#CC9393">${wlan0 
 memicon = widget({ type = "imagebox" })
 memicon.image = image(beautiful.widget_mem)
 
-memwidget = widget({ type = "textbox" })
-vicious.register(memwidget, vicious.widgets.mem, '<span color="#C1E1EA">$1%</span> ', 5)
+--memwidget = awful.widget.progressbar()
+--memwidget:set_width(5)
+--memwidget:set_height(12)
+--memwidget:set_vertical(true)
+--memwidget:set_background_color(beautiful.bg_normal)
+--memwidget:set_border_color("#C1E1EA")
+--memwidget:set_color("#C1E1EA")
+--vicious.register(memwidget, vicious.widgets.mem, '$1', 5)
+--awful.widget.layout.margins[memwidget.widget] = { top = 3 }
+
+memwidget = {}
+memwidget.widget = widget({ type = "textbox" })
+vicious.register(memwidget.widget, vicious.widgets.mem, '$1%', 5)
 
 -- Create a CPU widget
 cpuicon = widget({ type = "imagebox" })
@@ -255,7 +266,7 @@ for s = 1, screen.count() do
         mylayoutbox[s],
         mytextclock,
 	upicon, netwidget, dnicon,
-	memwidget, memicon, cpuwidget, cpuicon,
+	memwidget.widget, memicon, cpuwidget, cpuicon,
 	pacwidget, pacicon, 
 	mpdwidget, mpdicon,
 	kbdcfg.widget,
@@ -293,6 +304,10 @@ globalkeys = awful.util.table.join(
             if client.focus then client.focus:raise() end
         end),
     awful.key({ modkey,           }, "w", function () mymainmenu:show({keygrabber=true}) end),
+
+
+    -- Keyboard layout switch
+    awful.key({ "Mod1"		  }, "Shift_L", function () kbdcfg.switch()  end ),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
