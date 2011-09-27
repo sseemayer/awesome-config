@@ -146,9 +146,9 @@ kbdcfg.widget = widget({ type = "textbox", align = "right" })
 kbdcfg.widget.text = '<span color="#adde97"> ' .. kbdcfg.layout[kbdcfg.current] .. " </span>"
 kbdcfg.switch = function ()
 kbdcfg.current = kbdcfg.current % #(kbdcfg.layout) + 1
-local t = '<span color="#adde97"> ' .. kbdcfg.layout[kbdcfg.current] .. " </span>"
-kbdcfg.widget.text = t
-os.execute( kbdcfg.cmd .. t )
+local t = kbdcfg.layout[kbdcfg.current]
+kbdcfg.widget.text = '<span color="#adde97"> ' .. t .. " </span>"
+os.execute( kbdcfg.cmd .. " " .. t )
 end
 
 -- Mouse bindings
