@@ -5,6 +5,7 @@ require("awful.rules")
 require("beautiful")
 require("naughty")
 require("vicious")
+require("cal")
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
@@ -135,7 +136,7 @@ vicious.register(mpdwidget, vicious.widgets.mpd,
 
 -- Pacman Widget
 pacwidget = widget({type="textbox"})
-vicious.register(pacwidget, vicious.widgets.pkg, '<span color="#FFCC00">pac $1 </span>', 1801, "Arch")
+vicious.register(pacwidget, vicious.widgets.pkg, '<span color="#FFCC00">pac $1 </span>', 60, "Arch")
 
 -- Keyboard layout widget
 kbdcfg = {}
@@ -160,6 +161,7 @@ awful.button({ }, 1, function () kbdcfg.switch() end)
 -- Create a textclock widget
 mytextclock = widget({ type = "textbox" })
 vicious.register(mytextclock, vicious.widgets.date, "%a %b %e  %k:%M:%S  ", 1)
+cal.register(mytextclock)
 
 -- Create a systray
 mysystray = widget({ type = "systray" })
@@ -409,7 +411,9 @@ awful.rules.rules = {
                      border_color = beautiful.border_normal,
                      focus = true,
                      keys = clientkeys,
-                     buttons = clientbuttons } },
+                     buttons = clientbuttons, 
+	     	     size_hints_honor = false
+	     } },
     { rule = { class = "MPlayer" },
       properties = { floating = true } },
     { rule = { class = "pinentry" },
