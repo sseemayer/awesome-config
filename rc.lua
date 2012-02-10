@@ -3,6 +3,7 @@ require("awful")
 require("awful.autofocus")
 require("awful.rules")
 require("beautiful")
+require("eminent")
 require("naughty")
 require("vicious")
 require("cal")
@@ -14,9 +15,9 @@ beautiful.init(mytheme)
 --beautiful.init("/usr/share/awesome/themes/zenburn/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "terminal"
+terminal = "urxvt"
 editor = "vim"
-editor_cmd = terminal .. " -x " .. editor
+editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -48,7 +49,8 @@ layouts =
 tags = {}
 for s = 1, screen.count() do
    -- Each screen has its own tag table.
-   tags[s] = awful.tag({ "eins", "zwei", "drei", "vier" }, s, layouts[1])
+   --tags[s] = awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, layouts[1])
+   tags[s] = awful.tag({ "eins", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun" }, s, layouts[1])
 end
 -- }}}
 
@@ -78,7 +80,6 @@ menu_internet = {
 
 menu_dev = {
 	{ "&eclipse", "eclipse", image(iconbase .. "eclipse.png")},
-	{ "&jmonkey", "/home/seemayer/bin/jmonkeyplatform/bin/jmonkeyplatform", image("/home/seemayer/bin/jmonkeyplatform/jmonkeyplatform.gif")},
 	{ "&virt-manager", "virt-manager", image(iconbase .. "virtualbox.png")},
 }
 
@@ -124,6 +125,8 @@ cpuwidget = widget({ type = "textbox" })
 vicious.register(cpuwidget, vicious.widgets.cpu, '<span color="#CC9393">cpu $1% </span> ', 2)
 
 -- Create an MPD widget
+mpd_pass = string.match(os.getenv("MPD_HOST"), "^(.+)@")
+
 mpdwidget = widget({ type = "textbox" })
 vicious.register(mpdwidget, vicious.widgets.mpd,
 	function (widget, args)
@@ -132,7 +135,7 @@ vicious.register(mpdwidget, vicious.widgets.mpd,
 		else 
 			return '<span color="#ba82e1"> ' .. args["{Artist}"]..' - '.. args["{Title}"] .. " </span>"
 		end
-	end, 3)
+	end, 3, {password=mpd_pass})
 
 -- Pacman Widget
 pacwidget = widget({type="textbox"})
@@ -321,6 +324,8 @@ globalkeys = awful.util.table.join(
     
     awful.key({ modkey,		  }, "s", function () awful.util.spawn("sonata") end ),
     awful.key({ modkey,		  }, "p", function () awful.util.spawn("mpc toggle") end ),
+    awful.key({ modkey, "Shift"   }, "Left", function () awful.util.spawn("mpc prev") end ),
+    awful.key({ modkey, "Shift"   }, "Right",  function () awful.util.spawn("mpc next") end ),
 
     -- Prompt
     awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
@@ -434,7 +439,7 @@ awful.rules.rules = {
 -- Signal function to execute when a new client appears.
 client.add_signal("manage", function (c, startup)
     -- Add a titlebar
-    awful.titlebar.add(c, { modkey = modkey })
+    --awful.titlebar.add(c, { modkey = modkey })
 
     -- Enable sloppy focus
     c:add_signal("mouse::enter", function(c)
