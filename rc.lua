@@ -8,6 +8,8 @@ require("naughty")
 require("vicious")
 require("cal")
 
+-- awful.util.spawn_with_shell("xcompmgr &")
+
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
 mytheme = "/home/seemayer/.config/awesome/themes/semi/theme.lua"
@@ -36,7 +38,7 @@ layouts =
     --awful.layout.suit.tile.top,
     awful.layout.suit.fair,
     --awful.layout.suit.fair.horizontal,
-    --awful.layout.suit.spiral,
+    awful.layout.suit.spiral,
     --awful.layout.suit.spiral.dwindle,
     awful.layout.suit.max
     --awful.layout.suit.max.fullscreen,
@@ -428,6 +430,9 @@ awful.rules.rules = {
 
     { rule = { class = "Sonata" },
       properties = { floating = true } },
+   
+    { rule = { class = "docky" },
+      properties = { floating = true, ontop = true } }, 
 
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
