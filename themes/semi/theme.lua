@@ -9,11 +9,11 @@
 -- * fugue by Yusuke Kamiyamane  --
 -----------------------------------
 
-basefolder = "/home/seemayer/.config/awesome/themes/semi/"
+basefolder = "/home/sseemayer/.config/awesome/themes/semi/"
 
 -- {{{ Main
 theme = {}
-theme.wallpaper_cmd = { "awsetbg " .. basefolder .. "wallpaper.png" }
+theme.wallpaper_cmd = { "awsetbg " .. basefolder .. "wallpaper.jpg" }
 -- }}}
 
 -- {{{ Styles
@@ -97,6 +97,20 @@ theme.taglist_squares_unsel = "/usr/share/awesome/themes/zenburn/taglist/squarez
 theme.awesome_icon           = "/usr/share/awesome/themes/zenburn/awesome-icon.png"
 theme.menu_submenu_icon      = "/usr/share/awesome/themes/default/submenu.png"
 theme.tasklist_floating_icon = "/usr/share/awesome/themes/default/tasklist/floatingw.png"
+
+theme.terminal_icon            = "/usr/share/icons/Faenza/apps/16/terminal.png"
+theme.folder_icon            = "/usr/share/icons/Faenza/places/16/folder-home.png"
+theme.firefox_icon            = "/usr/share/icons/Faenza/apps/16/firefox.png"
+theme.chromium_icon            = "/usr/share/icons/Faenza/apps/16/chromium.png"
+theme.squirrelsql_icon            = "/usr/share/icons/Faenza/apps/16/glade.png"
+theme.mysql_icon            = "/usr/share/icons/Faenza/apps/16/glade.png"
+theme.pidgin_icon            = "/usr/share/icons/Faenza/apps/16/pidgin.png"
+theme.empathy_icon            = "/usr/share/icons/Faenza/apps/16/empathy.png"
+theme.thunderbird_icon            = "/usr/share/icons/Faenza/apps/16/thunderbird.png"
+theme.eclipse_icon            = "/usr/share/icons/Faenza/apps/16/eclipse.png"
+theme.gimp_icon            = "/usr/share/icons/Faenza/apps/16/gimp.png"
+theme.inkscape_icon            = "/usr/share/icons/Faenza/apps/16/inkscape.png"
+
 -- }}}
 
 -- {{{ Layout
